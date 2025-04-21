@@ -1,4 +1,4 @@
-// link 
+// mapping 
 
 const display = document.getElementById('display');
 
@@ -48,25 +48,25 @@ function divideFunction (num1, num2) {
 };
 
 function digitClick (digit) {
-    if (num1Complete === false && operator === "equal"){
+    if (num1Complete === false && operator === "equal" && num1.length < 10){
         num1 = digit;
         displayText = num1;
         display.textContent = displayText;
         console.log(num1);
     }
-    else if (num1Complete === true){
+    else if (num1Complete === true && num2.length < 10){
         num2 += digit;
         displayText = num2;
         display.textContent = displayText;
         console.log(num2);
     }
-    else if (num1Complete === false) {
+    else if (num1Complete === false && num1.length < 10) {
         num1 += digit;
         displayText = num1;
         display.textContent = displayText;
         console.log(num1);
     }
-    else console.log("SOMETHING IS OFF HERE 1")
+    else console.log("ERR")
 };
 
 function operatorClick (operatorPassed) {
@@ -79,31 +79,30 @@ function operatorClick (operatorPassed) {
         if (operator === "plus") {
             result = addFunction (num1, num2);
             operator = operatorPassed;
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;}
         else if (operator === "minus") {
             result = subtractFunction (num1, num2);
             operator = operatorPassed;
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;}
         else if (operator === "multiply") {
             result = multiplyFunction (num1, num2);
             operator = operatorPassed;
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;}
         else if (operator === "divide") {
             result = divideFunction (num1, num2);
             operator = operatorPassed;
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;}
-        else console.log("SOMETHING IS OFF HERE 3");
         num1 = result;
         num1Complete = true;
         num2 = "";
         console.log(operator)
         console.log(result)
     }
-    else console.log("SOMETHING IS OFF HERE 2")
+    else console.log("ERR")
 }
 
 function equalClick () { 
@@ -111,38 +110,49 @@ function equalClick () {
         if (operator === "plus") {
             result = addFunction (num1, num2);
             console.log(result);
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;
         }
         if (operator === "minus") {
             result = subtractFunction (num1, num2);
             console.log(result);
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;
         }
         if (operator === "multiply") {
             result = multiplyFunction (num1, num2);
             console.log(result);
-            displayText = result;
+            displayText = trimToTenDigits(result);
             display.textContent = displayText;
         }
         if (operator === "divide") {
             result = divideFunction (num1, num2);
             console.log(result);
-            displayText = result;
-            display.textContent = displayText;
+            displayText = trimToTenDigits(result);
+            display.textContent = displayText
         }
         num1Complete = false;
         num1 = result;
         num2 = "";
         operator = "equal";
     }
-    else console.log("SOMETHING IS OFF HERE 3")
+    else console.log("ERR")
 }
 
+function clearWithAC () {
+    num1 = "";
+    num2 = "";
+    operator = "";
+    result = "";
+    num1Complete = false;
+    displayText = "0";
+    display.textContent = displayText;
+}
 
-
-
+// doesn't handle big number, can be improved but I lost interest
+function trimToTenDigits (num) {
+    return parseFloat(num.toPrecision(10));
+}
 
 one.addEventListener("click", () => {
     digitClick(1);
@@ -177,7 +187,7 @@ zero.addEventListener("click", () => {
 
 
 ac.addEventListener("click", () => {
-    console.log("ac");
+    clearWithAC();
 })
 divide.addEventListener("click", () => {
     operatorClick("divide");

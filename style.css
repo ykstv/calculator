@@ -27,7 +27,7 @@ html, body {
     text-align: right;
     font-size: 120px;
     color: black;
-    border: 3px solid #333;
+    border: 5px solid #333;
     display: flex;
     justify-content: flex-end;
     align-items: center;
